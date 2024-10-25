@@ -4,6 +4,19 @@
 #include <cstdlib>
 using namespace std;
 using namespace chrono;
+int binarySearch(int arr[], int value, int start, int end) {
+    if (end >= start) {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == value) {
+            return mid;
+        }
+        if (arr[mid] > value) {
+            return binarySearch(arr, value, start, mid - 1);
+        }
+        return binarySearch(arr, value, mid + 1, end);
+    }
+    return -1;
+}
 void mainMenu() {
     system("cls");
     cout << "Выберите действие: " << endl;
@@ -85,13 +98,18 @@ void MinMaxAverageForSorted(int arr[], int N) {
     cout << "Bремя на поиск: " << duration_cast<nanoseconds>(end - start).count() << '\n';   
     cout << "Индексы всех элементов, равных среднему значению: ";
     auto start1 = steady_clock::now();
-    for (int i = 0; i < N; ++i) {
-        if (arr[i] == average) {
-            amount = amount + 1;
-            cout << i << " ";
+    int index = binarySearch(arr, average, 0, 99);
+    if (index != -1) {
+        cout << index << " ";
+        amount += 1;
+        for (int i = 1; i < N - index; i++) {
+            if (arr[index + i] == arr[index]) {
+                cout << index + i << " ";
+                amount++;
+            }
+            else
+                break;
         }
-        if (arr[i] > average)
-            break;
     }
     auto end1 = steady_clock::now();
     auto result1 = duration_cast<nanoseconds>(end1 - start1);
@@ -99,8 +117,7 @@ void MinMaxAverageForSorted(int arr[], int N) {
     cout << "Поиск занял " << duration_cast<nanoseconds>(end1 - start1).count() << " нс" << endl;
     cout << "Всего нашлось подходящих элементов: " << amount << endl;
 }
-void quicksort(int* arr, int  end, int begin)
-{   
+void quickSort(int* arr, int  end, int begin){   
     int f = begin, l = end;
     int mid = arr[(f + l) / 2];
     while (f < l)
@@ -115,10 +132,10 @@ void quicksort(int* arr, int  end, int begin)
         }     
     }
     if (begin < l) {    
-        quicksort(arr, l, begin);     
+        quickSort(arr, l, begin);     
     }
     if (f < end) {
-        quicksort(arr, end, f);
+        quickSort(arr, end, f);
     }
 }
 void combSort(int arr[], int N) {
@@ -219,19 +236,7 @@ void bubbleSort(int arr[], int n) {
     auto result1 = duration_cast<nanoseconds>(end1 - start1);
     cout << "Сортировка заняла " << duration_cast<nanoseconds>(end1 - start1).count() << " нс" << endl;
 }
-int binarySearch(int arr[], int value, int start, int end) {
-    if (end >= start) {
-        int mid = start + (end - start) / 2;
-        if (arr[mid] == value) {
-            return mid;
-        }
-        if (arr[mid] > value) {
-            return binarySearch(arr, value, start, mid - 1);
-        }
-        return binarySearch(arr, value, mid + 1, end);
-    }
-    return -1;
-}
+
 int main() {
     setlocale(0, "");
     srand(time(NULL));
@@ -301,7 +306,7 @@ int main() {
                     cout << "Без сортировки: " << endl;
                     MinMaxAverage(A, n);           
                     auto start1 = steady_clock::now();
-                    quicksort(A, endSort, beginSort);
+                    quickSort(A, endSort, beginSort);
                     auto end1 = steady_clock::now();
                     auto result1 = duration_cast<nanoseconds>(end1 - start1);
                     cout << "Сортировка заняла " << duration_cast<nanoseconds>(end1 - start1).count() << " нс" << endl;
@@ -320,7 +325,7 @@ int main() {
         {
             cout << "Введите число: ";
             int num = checkInput();
-            quicksort(A, endSort, beginSort);
+            quickSort(A, endSort, beginSort);
             int count = 0;
             for (int i = 0; i < n; ++i) {
                 if (A[i] < num)
@@ -335,7 +340,7 @@ int main() {
         {
             cout << "Введите число: ";
             int num = checkInput();
-            quicksort(A, endSort, beginSort);
+            quickSort(A, endSort, beginSort);
             int count = 0;
             for (int i = n-1; i >= 0; --i) {
                 if (A[i] > num)
@@ -368,7 +373,7 @@ int main() {
                 cout << "Элемент не найден" << endl;
             }
             cout << "Поиск занял " << duration_cast<nanoseconds>(end - start).count() << " нс" << endl; 
-            quicksort(A, endSort, beginSort);
+            quickSort(A, endSort, beginSort);
             cout << "Бинарный поиск: " << endl;
             auto startB = steady_clock::now();
             int reply = binarySearch(A, value, 0, size - 1);

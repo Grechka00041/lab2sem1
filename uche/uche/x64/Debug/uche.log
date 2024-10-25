@@ -1,5 +1,5 @@
 ﻿  uche.cpp
-C:\Users\Ирина\source\repos\uche\uche.cpp(127,13): warning C4305: инициализация: усечение из "double" в "float"
-C:\Users\Ирина\source\repos\uche\uche.cpp(127,24): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-C:\Users\Ирина\source\repos\uche\uche.cpp(237,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Ирина\source\repos\uche\uche.cpp(144,13): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\Ирина\source\repos\uche\uche.cpp(144,24): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+C:\Users\Ирина\source\repos\uche\uche.cpp(242,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   uche.vcxproj -> C:\Users\Ирина\source\repos\uche\x64\Debug\uche.exe
